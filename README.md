@@ -21,4 +21,7 @@ The development hardware I'm using for this project is:
  * [Sparkfun MIDI Shield](https://www.sparkfun.com/products/12898)
  * [Adafruit Alphanumeric Backpack](https://learn.adafruit.com/adafruit-led-backpack/0-54-alphanumeric)
  
+Libraries
+---------
 
+* [47 Effects MIDI Library](https://github.com/FortySevenEffects/arduino_midi_library)
