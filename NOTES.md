@@ -8,15 +8,15 @@ Arduino Pin Usage
 
 
 Hardware Serial -> MIDI IN/OUT
-LED's -> D6, D7
-Buttons -> D2, D3, D4
-Pots -> A0, A1
+* LED's -> D6, D7
+* Buttons -> D2, D3, D4
+* Pots -> A0, A1
 
 ### Adafruit Alphanumeric Backpack
 
 
-Clock -> A5
-Data -> A4
+* Clock -> A5
+* Data -> A4
 
 MIDI Counting Notes:
 --------------------
