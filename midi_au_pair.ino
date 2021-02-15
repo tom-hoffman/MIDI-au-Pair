@@ -6,16 +6,14 @@
 // MIDI au Pair
 // by Tom Hoffman
 
-// MIDI Counting Notes:
-// Channels seem consistent across all 3 devices, 1-16?
-// ND Displays PC value +1
-
 // constants
 const byte MAP_CHANNEL = 15;
 const byte ND_GLOB_CHANNEL = 6;
 const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
 const byte PRESS = 0;
 const byte HOLD = 1;
+const byte LEFT = 0;
+const byte RIGHT = 1; 
 
 // global variables & buffer
 
@@ -45,14 +43,13 @@ Preset presets[preset_count] = {
   {"T2", {}, {0, 0}, {0, 0}}, 
 };
 
-typedef struct ButtonStatus{
+typedef struct PadButtonState{
   byte preset;
   byte oscillator;
   byte pad_number;
-} ButtonStatus;
+} PadButtonState;
 
-ButtonStatus left_button = {1, 1, 3};
-ButtonStatus right_button = {2, 2, 6};
+PadButtonState pad_buttons[2] = {{1, 1, 3}, {2, 2, 6}};
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -68,8 +65,8 @@ void setup()
   initHardware();
   writeDisplay();
   initMIDI();
-  displayButtonStatus(left_button, 'l');
-  displayButtonStatus(right_button, 'r');
+  displayPadButtonState(LEFT);
+  displayPadButtonState(RIGHT);
 }
 
 void loop()

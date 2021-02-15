@@ -22,12 +22,12 @@ void displayByte(byte b) {
   writeDisplay();
 }
 
-void displayButtonStatus(struct ButtonStatus B, char side) {
+void displayPadButtonState(byte side) {
+  PadButtonState B = pad_buttons[side];
   char t[3];
   int i;
   strcpy(t, presets[B.preset].id);
-  if (side == 'l') {i = 0;}
-  else {i = 2;}
+  i = side * 2;
   display_buffer[i] = t[0];
   display_buffer[i+1] = t[1];
   writeDisplay();
