@@ -62,7 +62,6 @@ static const byte PIN_LED_GRN = 6;
 static const byte PIN_LED_RED = 7;
  
 
-
 void initHardware() {
   pinMode(LED_BUILTIN, OUTPUT);
   alpha4.begin(0x70); 
@@ -73,7 +72,11 @@ void initHardware() {
   digitalWrite(PIN_LED_RED, HIGH);
 }
 
-
+void initMIDI() {
+  MIDI.setHandleControlChange(handleCC);
+  MIDI.begin(MAP_CHANNEL);
+  MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
+}
 
 // arduino sketch loops
 
@@ -89,44 +92,4 @@ void setup()
 void loop()
 {
   MIDI.read();
-}
-
-// MIDI & message handlers
-void initMIDI() {
-  MIDI.setHandleControlChange(handleCC);
-  MIDI.begin(MAP_CHANNEL);
-  MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
-}
-
-void handleCC(byte channel, byte controller, byte value) {
-  digitalWrite(PIN_LED_RED, LOW);
-  switch (controller) {
-    case 12:
-      handleLeftPress(value);
-      break;
-    case 13:
-      handleRightPress(value);
-      break;
-  }
-  digitalWrite(PIN_LED_RED, HIGH);
-}
-
-void handleLeftPress(byte value) {
-  switch (value) {
-    case HOLD:
-      left_button.preset = incrementPreset(left_button.preset);
-      displayButtonStatus(left_button, 'l');
-      alpha4.writeDisplay();
-      break;
-  }
-}
-
-void handleRightPress(byte value) {
-  switch (value) {
-    case HOLD:
-      right_button.preset = incrementPreset(right_button.preset);
-      displayButtonStatus(right_button, 'r');
-      alpha4.writeDisplay();
-      break;
-  }
 }
