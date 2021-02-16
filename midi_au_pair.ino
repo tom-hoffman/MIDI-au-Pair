@@ -66,8 +66,10 @@ void setup()
   initHardware();
   writeDisplay();
   initMIDI();
-  updatePadButtonPreset(LEFT);
-  updatePadButtonPreset(RIGHT);
+  for (int i = 0; i <= 1; i++) {
+    updatePadButtonPreset(i);
+    updatePadButtonActiveLED(i);
+  }  
 }
 
 void loop()

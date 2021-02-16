@@ -25,7 +25,10 @@ Hardware Serial -> MIDI IN/OUT
 MIDI Counting Notes:
 --------------------
 
-Channels seem consistent across all 3 devices, 1-16?
-ND Displays PC value +1
+MIDI Channels seem consistent across all 3 devices, 1-16?
+ND Displays program value +1
 
+Code Organization
+-----------------
 
+I'm a C++ novice, so I'm just using the Arduino IDE tab system to divide up the code. I'm using numbers in the filename to control the loading order, although I don't know if that really matters in this case.

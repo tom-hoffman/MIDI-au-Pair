@@ -1,3 +1,8 @@
+// init functions
+
+// MIDI au Pair
+// by Tom Hoffman
+
 void initHardware() {
   pinMode(LED_BUILTIN, OUTPUT);
   alpha4.begin(0x70); 
