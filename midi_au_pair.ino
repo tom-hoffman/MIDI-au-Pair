@@ -7,13 +7,21 @@
 // by Tom Hoffman
 
 // constants
-const byte MAP_CHANNEL = 15;
-const byte ND_GLOB_CHANNEL = 6;
-const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
-const byte PRESS = 0;
-const byte HOLD = 1;
-const byte LEFT = 0;
-const byte RIGHT = 1; 
+static const byte MAP_CHANNEL = 15;
+static const byte ND_GLOB_CHANNEL = 6;
+static const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
+static const byte PRESS = 0;
+static const byte HOLD = 1;
+static const byte LEFT = 0;
+static const byte RIGHT = 1; 
+
+// hardware setup boilerplate
+MIDI_CREATE_DEFAULT_INSTANCE();
+Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
+
+static const byte PIN_LED_GRN = 6;
+static const byte PIN_LED_RED = 7;
+static const byte BUTTON_LEDS[2] = {11, 12};
 
 // global variables & buffer
 
@@ -27,7 +35,6 @@ typedef struct Patch{
   byte toe_up;
 } Patch;
 
-// add ON/OFF
 typedef struct Preset{
   char id[3];               // two character string
   struct Patch patches[4];  // 4 patches should be enough for anyone
@@ -36,7 +43,7 @@ typedef struct Preset{
 } Preset;
 
 // remember to set this to the total number of presets 
-const byte preset_count = 3;
+static const byte preset_count = 3;
 Preset presets[preset_count] = {
   {"--", {}, {0, 0}, {0, 0}},
   {"T1", {}, {0, 0}, {0, 0}},
@@ -44,19 +51,13 @@ Preset presets[preset_count] = {
 };
 
 typedef struct PadButtonState{
+  bool active;
   byte preset;
   byte oscillator;
   byte pad_number;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{1, 1, 3}, {2, 2, 6}};
-
-// hardware setup boilerplate
-MIDI_CREATE_DEFAULT_INSTANCE();
-Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
-
-static const byte PIN_LED_GRN = 6;
-static const byte PIN_LED_RED = 7;
+PadButtonState pad_buttons[2] = {{false, 1, 1, 3}, {false, 2, 2, 6}};
 
 // arduino sketch loops
 
@@ -65,8 +66,8 @@ void setup()
   initHardware();
   writeDisplay();
   initMIDI();
-  displayPadButtonState(LEFT);
-  displayPadButtonState(RIGHT);
+  updatePadButtonPreset(LEFT);
+  updatePadButtonPreset(RIGHT);
 }
 
 void loop()

@@ -13,9 +13,14 @@ void handleCC(byte channel, byte controller, byte value) {
 
 void handlePadPress(byte side, byte value) {
   switch (value) {
+    case PRESS:
+      pad_buttons[side].active = !pad_buttons[side].active;
+      updatePadButtonActive(side);
+      break;
     case HOLD:
       pad_buttons[side].preset = incrementPreset(pad_buttons[side].preset);
-      displayPadButtonState(side);
+      updatePadButtonPreset(side);
       alpha4.writeDisplay();
+      break;
   }
 }

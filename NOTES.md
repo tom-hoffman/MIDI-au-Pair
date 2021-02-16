@@ -14,9 +14,13 @@ Hardware Serial -> MIDI IN/OUT
 
 ### Adafruit Alphanumeric Backpack
 
-
 * Clock -> A5
 * Data -> A4
+
+### Indicator LED's
+
+* Left -> D11
+* Right -> D12
 
 MIDI Counting Notes:
 --------------------
