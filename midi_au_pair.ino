@@ -46,18 +46,18 @@ typedef struct Preset{
 static const byte preset_count = 3;
 Preset presets[preset_count] = {
   {"--", {}, {0, 0}, {0, 0}},
-  {"T1", {}, {0, 0}, {0, 0}},
-  {"T2", {}, {0, 0}, {0, 0}}, 
+  {"T1", {}, {1, 10}, {1, 10}},
+  {"T2", {}, {2, 20}, {2, 20}}, 
 };
 
 typedef struct PadButtonState{
   bool active;
+  byte pad_number;
   byte preset;
   byte oscillator;
-  byte pad_number;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 1, 1, 3}, {false, 2, 2, 6}};
+PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 2}};
 
 // arduino sketch loops
 

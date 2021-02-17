@@ -20,7 +20,7 @@ void handlePadPress(byte side, byte value) {
   switch (value) {
     case PRESS:
       pad_buttons[side].active = !pad_buttons[side].active;
-      // firePadButtonState(side);
+      firePadButtonState(side);
       updatePadButtonActiveLED(side);
       break;
     case HOLD:

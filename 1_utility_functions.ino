@@ -11,3 +11,6 @@ int incrementPreset(byte current_preset) {
     return 0;
   }
 }
+byte getPadChannel(byte pad) {
+  return ND_PAD_CHANNELS[pad - 1];
+}
