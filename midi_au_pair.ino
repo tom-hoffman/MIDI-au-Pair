@@ -7,28 +7,29 @@
 // by Tom Hoffman
 
 // constants
-static const byte MAP_CHANNEL = 15;
-static const byte ND_GLOB_CHANNEL = 6;
-static const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
-static const byte PRESS = 0;
-static const byte HOLD = 1;
-static const byte LEFT = 0;
-static const byte RIGHT = 1; 
+const byte MAP_CHANNEL = 15;
+const byte ND_GLOB_CHANNEL = 6;
+const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
+const byte PATCH_COUNT = 4;
+const byte PRESS = 0;
+const byte HOLD = 1;
+const byte LEFT = 0;
+const byte RIGHT = 1; 
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
 Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
 
-static const byte PIN_LED_GRN = 6;
-static const byte PIN_LED_RED = 7;
-static const byte BUTTON_LEDS[2] = {11, 12};
+const byte PIN_LED_GRN = 6;
+const byte PIN_LED_RED = 7;
+const byte BUTTON_LEDS[2] = {11, 12};
 
 // global variables & buffer
 
 char display_buffer[] = "Helo";
 
 // presets & patches
-// A Preset is an array of up to 4 patches.
+// A Preset is an array of up to PATCH_COUNT patches.
 typedef struct Patch{
   byte controller;
   byte toe_down;
@@ -37,18 +38,24 @@ typedef struct Patch{
 
 typedef struct Preset{
   char id[3];               // two character string
-  struct Patch patches[4];  // 4 patches should be enough for anyone
+  struct Patch patches[PATCH_COUNT]; 
   byte on[2];               // controller/value to fire on start
   byte off[2];              // controller/value to fire on end
 } Preset;
 
 // remember to set this to the total number of presets 
-static const byte preset_count = 3;
+const byte preset_count = 3;
 Preset presets[preset_count] = {
-  {"--", {}, {0, 0}, {0, 0}},
-  {"T1", {}, {1, 10}, {1, 10}},
-  {"T2", {}, {2, 20}, {2, 20}}, 
+  {"--",  {}, {0, 0}, {0, 0}},
+  // "Hi" is a natural-ish hi-hat open/close dynamic.
+  {"Hi", {{17, 0 ,64}, {30, 127, 0}, {21, 16, 70}, {50, 16, 70}}, {0, 0}, {0, 0}},
+  // "WA" is a wah-wah effect sweeping the parametric eq.
+  {"Wa", {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
+
+// oscillator values
+// 0 - no oscillation -- just on and off messages.
+// 1 - expression pedal controlled oscillation
 
 typedef struct PadButtonState{
   bool active;
@@ -57,7 +64,9 @@ typedef struct PadButtonState{
   byte oscillator;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 2}};
+// SWITCH TO IDENTIFYING PATCHES BY ID.  IMPLEMENT FIND.
+
+PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
 
 // arduino sketch loops
 

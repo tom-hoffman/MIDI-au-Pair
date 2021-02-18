@@ -6,10 +6,13 @@
 void handleCC(byte channel, byte controller, byte value) {
   digitalWrite(PIN_LED_RED, LOW);
   switch (controller) {
-    case 12:
+    case 11: // expression pedal
+      handleExpressionInput(value);
+      break;
+    case 12: // left button
       handlePadPress(LEFT, value);
       break;
-    case 13:
+    case 13: // right button
       handlePadPress(RIGHT, value);
       break;
   }

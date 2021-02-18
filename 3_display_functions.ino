@@ -4,7 +4,7 @@
 // by Tom Hoffman
 
 void writeDisplay() {
-  for(int i=0; i<4; i++) {
+  for(int i = 0; i < 4; i++) {
     alpha4.writeDigitAscii(i, display_buffer[i]);
   }
   alpha4.writeDisplay();
