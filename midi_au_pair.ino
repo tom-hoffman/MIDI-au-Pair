@@ -50,7 +50,7 @@ Preset presets[preset_count] = {
   // "Hi" is a natural-ish hi-hat open/close dynamic.
   {"Hi", {{17, 0 ,64}, {30, 127, 0}, {21, 16, 70}, {50, 16, 70}}, {0, 0}, {0, 0}},
   // "WA" is a wah-wah effect sweeping the parametric eq.
-  {"Wa", {25, 0, 127}, {26, 64}, {26, 0}}, 
+  {"WA", {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
 
 // oscillator values
@@ -63,8 +63,6 @@ typedef struct PadButtonState{
   byte preset;
   byte oscillator;
 } PadButtonState;
-
-// SWITCH TO IDENTIFYING PATCHES BY ID.  IMPLEMENT FIND.
 
 PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
 
