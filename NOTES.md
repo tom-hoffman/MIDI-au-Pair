@@ -26,6 +26,7 @@ MIDI Counting Notes:
 --------------------
 
 MIDI Channels seem consistent across all 3 devices, 1-16?
+Mido (Python) does MIDI channels 0-15 (-1).
 ND Displays program value +1
 
 Code Organization

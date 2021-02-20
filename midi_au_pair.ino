@@ -15,6 +15,8 @@ const byte PRESS = 0;
 const byte HOLD = 1;
 const byte LEFT = 0;
 const byte RIGHT = 1; 
+const byte TOE_DOWN = 0;
+const byte TOE_UP = 127;
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -60,7 +62,7 @@ Preset presets[preset_count] = {
 typedef struct PadButtonState{
   bool active;
   byte pad_number;
-  byte preset;
+  byte preset; 
   byte oscillator;
 } PadButtonState;
 

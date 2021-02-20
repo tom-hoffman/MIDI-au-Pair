@@ -24,6 +24,7 @@ void handleExpressionInput(byte value) {
         if ((pat.controller != 0) || (pat.toe_down != 0) || (pat.toe_up != 0)) {
           digitalWrite(PIN_LED_GRN, LOW);
           pat = pre.patches[j];
+          // add scaling
           MIDI.sendControlChange(pat.controller, value, 
                                  getPadChannel(button.pad_number));
           digitalWrite(PIN_LED_GRN, HIGH);
