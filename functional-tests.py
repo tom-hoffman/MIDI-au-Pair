@@ -23,20 +23,20 @@ with mido.open_ioport(TEST_PORT) as port:
 #                            control=RIGHT_BUTTON, value=0))
 
     time.sleep(1)
+    cc_return = {30:0, 17:0}
+
     print("Simulating stream of CC values from expression pedal.")
     print("From heel-down to toe-down.")
     for i in range(128):
         port.send(mido.Message('control_change', channel=MAP_CHANNEL,
                                control=EX_PEDAL, value=i))
         time.sleep(0.1)
-        msg = port.poll()
-        while (msg != None):
-            print(msg)
-            time.sleep(0.2)
-            msg = port.poll()
-        print('Sending value %d... Recieved %d.' % (i, msg.value), end='\r')
+        for msg in port.iter_pending():
+            cc_return[msg.control] = msg.value
+#             print(msg)
+        print(f"i: {i}, Spec: {cc_return[30]}, ND: {cc_return[21]}")
+
         
-        time.sleep(0.1)
     
     print("Simulating MIDI Baby Left Button Press...")
     port.send(mido.Message('control_change', channel=MAP_CHANNEL,

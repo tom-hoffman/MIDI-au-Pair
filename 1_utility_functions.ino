@@ -15,8 +15,10 @@ byte getPadChannel(byte pad) {
   return ND_PAD_CHANNELS[pad - 1];
 }
 
-byte scaleCC(byte value, byte toe_down, byte toe_up) {
+int scaleCC(byte value, byte toe_down, byte toe_up) {
   byte range = toe_up - toe_down;
-  float factor = range / 127;
-  return ((factor * value) + toe_down);
+  float factor = range / 127.0;
+  float scaled ((factor * value) + toe_down);
+  int scaled_int(scaled);
+  return scaled;
 }

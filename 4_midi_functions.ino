@@ -8,6 +8,7 @@ void handleExpressionInput(byte value) {
   Preset pre;
   byte pre_index;
   Patch pat;
+  int scaled;
   // for each button
   for (int i = 0; i <= 1; i++) {
     // get the button
@@ -24,8 +25,9 @@ void handleExpressionInput(byte value) {
         if ((pat.controller != 0) || (pat.toe_down != 0) || (pat.toe_up != 0)) {
           digitalWrite(PIN_LED_GRN, LOW);
           pat = pre.patches[j];
-          // add scaling
-          MIDI.sendControlChange(pat.controller, value, 
+          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
+          MIDI.sendControlChange(pat.controller, 
+                                 scaled,
                                  getPadChannel(button.pad_number));
           digitalWrite(PIN_LED_GRN, HIGH);
         }
