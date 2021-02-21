@@ -22,3 +22,7 @@ void initMIDI() {
   MIDI.begin(MAP_CHANNEL);
   MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
 }
+
+void calculatePatchScales() {
+  
+}

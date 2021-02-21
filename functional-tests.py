@@ -23,7 +23,10 @@ with mido.open_ioport(TEST_PORT) as port:
 #                            control=RIGHT_BUTTON, value=0))
 
     time.sleep(1)
-    cc_return = {30:0, 17:0}
+    cc_return = {30:0, 17:0, 50:0, 21:0}
+
+    for msg in port.iter_pending():
+        cc_return[msg.control] = msg.value
 
     print("Simulating stream of CC values from expression pedal.")
     print("From heel-down to toe-down.")
@@ -33,8 +36,7 @@ with mido.open_ioport(TEST_PORT) as port:
         time.sleep(0.1)
         for msg in port.iter_pending():
             cc_return[msg.control] = msg.value
-#             print(msg)
-        print(f"i: {i}, Spec: {cc_return[30]}, ND: {cc_return[21]}")
+        print(f"i: {i}, Spec: {cc_return[30]}, Res:{cc_return[17]}, TDec: {cc_return[50]}, NDec: {cc_return[21]}")
 
         
     

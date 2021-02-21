@@ -1,3 +1,4 @@
+#include <math.h>
 #include <MsTimer2.h>
 #include <MIDI.h>
 #include <Adafruit_GFX.h>
@@ -34,8 +35,8 @@ char display_buffer[] = "Helo";
 // A Preset is an array of up to PATCH_COUNT patches.
 typedef struct Patch{
   byte controller;
-  byte toe_down;
   byte toe_up;
+  byte toe_down;
 } Patch;
 
 typedef struct Preset{
@@ -50,10 +51,12 @@ const byte preset_count = 3;
 Preset presets[preset_count] = {
   {"--",  {}, {0, 0}, {0, 0}},
   // "Hi" is a natural-ish hi-hat open/close dynamic.
-  {"Hi", {{17, 0 ,64}, {30, 127, 0}, {21, 16, 70}, {50, 16, 70}}, {0, 0}, {0, 0}},
+  {"Hi", {{17, 64, 0}, {30, 0, 127}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
   // "WA" is a wah-wah effect sweeping the parametric eq.
   {"WA", {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
+
+float patchScales[preset_count][PATCH_COUNT];
 
 // oscillator values
 // 0 - no oscillation -- just on and off messages.
@@ -75,6 +78,7 @@ void setup()
   initHardware();
   writeDisplay();
   initMIDI();
+  calculatePatchScales();
   for (int i = 0; i <= 1; i++) {
     updatePadButtonPreset(i);
     updatePadButtonActiveLED(i);
