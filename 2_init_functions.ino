@@ -16,7 +16,6 @@ void initHardware() {
   pinMode(BUTTON_LEDS[RIGHT], OUTPUT);
   digitalWrite(BUTTON_LEDS[RIGHT], LOW);
   pinMode(PULSE_LED, OUTPUT);
-  analogWrite(PULSE_LED, 255);
 }
 
 void initMIDI() {

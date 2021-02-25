@@ -18,6 +18,8 @@ const byte RIGHT = 1;
 const byte TOE_DOWN = 0;
 const byte TOE_UP = 127;
 const float TOETH = 1.0 / TOE_UP;
+const byte OSC_DELAY = 100;
+const float OSC_INC = 6.283 / OSC_DELAY;
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -32,6 +34,8 @@ const byte BUTTON_LEDS[2] = {11, 12};
 
 char display_buffer[] = "Helo";
 byte quarter_count = 0;
+byte pulse = 0; // ???
+float osc_counter = 0;
 unsigned long last_millis = 0;
 unsigned long new_millis = 0;
 unsigned int clock_millis = 0;
@@ -64,6 +68,7 @@ Preset presets[preset_count] = {
 // oscillator values
 // 0 - no oscillation -- just on and off messages.
 // 1 - expression pedal controlled oscillation
+// 2 - basic sine wave
 
 typedef struct PadButtonState{
   bool active;
@@ -85,6 +90,8 @@ void setup()
     updatePadButtonPreset(i);
     updatePadButtonActiveLED(i);
   }  
+  MsTimer2::set(OSC_DELAY, osc_handler);
+  MsTimer2::start();
 }
 
 void loop()
