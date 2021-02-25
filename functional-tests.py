@@ -8,7 +8,7 @@ print(mido.get_input_names())
 print("Output ports:")
 print(mido.get_output_names())
 
-TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 28:0'
+TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 32:0'
 MAP_CHANNEL = 14 # seems to be -1?
 LEFT_BUTTON = 12
 RIGHT_BUTTON = 13

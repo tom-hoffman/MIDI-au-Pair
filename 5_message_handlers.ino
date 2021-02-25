@@ -33,3 +33,15 @@ void handlePadPress(byte side, byte value) {
       break;
   }
 }
+
+void handleClock() {
+  if (quarter_count == 23) {
+    digitalWrite(PIN_LED_RED, LOW);
+    quarter_count = 0;
+    digitalWrite(PIN_LED_RED, HIGH);
+  }
+  quarter_count++;
+  last_millis = new_millis;
+  new_millis = millis();
+  clock_millis = new_millis - last_millis;
+}

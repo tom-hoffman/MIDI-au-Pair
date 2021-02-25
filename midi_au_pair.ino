@@ -1,4 +1,3 @@
-#include <math.h>
 #include <MsTimer2.h>
 #include <MIDI.h>
 #include <Adafruit_GFX.h>
@@ -18,6 +17,7 @@ const byte LEFT = 0;
 const byte RIGHT = 1; 
 const byte TOE_DOWN = 0;
 const byte TOE_UP = 127;
+const float TOETH = 1.0 / TOE_UP;
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -25,11 +25,16 @@ Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
 
 const byte PIN_LED_GRN = 6;
 const byte PIN_LED_RED = 7;
+const byte PULSE_LED = 5;
 const byte BUTTON_LEDS[2] = {11, 12};
 
 // global variables & buffer
 
 char display_buffer[] = "Helo";
+byte quarter_count = 0;
+unsigned long last_millis = 0;
+unsigned long new_millis = 0;
+unsigned int clock_millis = 0;
 
 // presets & patches
 // A Preset is an array of up to PATCH_COUNT patches.
@@ -56,8 +61,6 @@ Preset presets[preset_count] = {
   {"WA", {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
 
-float patchScales[preset_count][PATCH_COUNT];
-
 // oscillator values
 // 0 - no oscillation -- just on and off messages.
 // 1 - expression pedal controlled oscillation
@@ -78,7 +81,6 @@ void setup()
   initHardware();
   writeDisplay();
   initMIDI();
-  calculatePatchScales();
   for (int i = 0; i <= 1; i++) {
     updatePadButtonPreset(i);
     updatePadButtonActiveLED(i);

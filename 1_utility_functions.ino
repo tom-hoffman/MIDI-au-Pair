@@ -17,8 +17,8 @@ byte getPadChannel(byte pad) {
 
 int scaleCC(byte value, byte toe_down, byte toe_up) {
   int range = toe_up - toe_down;
-  float factor = range / 127.0;
+  float factor = range * TOETH;
   float scaled ((factor * value) + toe_down);
-  int scaled_int = round(scaled);
+  int scaled_int = (int) scaled;
   return scaled_int;
 }

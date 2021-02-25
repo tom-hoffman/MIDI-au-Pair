@@ -15,14 +15,13 @@ void initHardware() {
   digitalWrite(BUTTON_LEDS[LEFT], LOW);
   pinMode(BUTTON_LEDS[RIGHT], OUTPUT);
   digitalWrite(BUTTON_LEDS[RIGHT], LOW);
+  pinMode(PULSE_LED, OUTPUT);
+  analogWrite(PULSE_LED, 255);
 }
 
 void initMIDI() {
   MIDI.setHandleControlChange(handleCC);
+  MIDI.setHandleClock(handleClock);
   MIDI.begin(MAP_CHANNEL);
   MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
-}
-
-void calculatePatchScales() {
-  
 }

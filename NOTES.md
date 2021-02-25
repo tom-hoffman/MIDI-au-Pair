@@ -21,6 +21,7 @@ Hardware Serial -> MIDI IN/OUT
 
 * Left -> D11
 * Right -> D12
+* Pulse -> D5
 
 MIDI Counting Notes:
 --------------------

@@ -22,7 +22,7 @@ The development hardware I'm using for this project is:
  * [Arduino Uno](https://store.arduino.cc/usa/arduino-uno-rev3)
  * [Sparkfun MIDI Shield](https://www.sparkfun.com/products/12898)
  * [Adafruit Alphanumeric Backpack](https://learn.adafruit.com/adafruit-led-backpack/0-54-alphanumeric)
- * a few LED's connected to D11 & D12.
+ * a few LED's connected to D5, D11 & D12.
  
 Libraries
 ---------
