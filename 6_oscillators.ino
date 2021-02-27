@@ -5,12 +5,31 @@
 
 void second_sine_oscillator(byte b) {
   PadButtonState button = pad_buttons[b];
-  // This will be called once every osc_delay
+  // Generates one full cycle per second.
+  // Will be called every OSC_DELAY,
+  // so it should increment at (twoPI / (1000 / OSC_DELAY))
+  // This will be called once every OSC_DELAY
   // IF one of the buttons is using it.
   // This will calculate a new value based on 
   // the sine function and osc_counter, and
   // IF THAT VALUE IS DIFFERENT from the old
   // CC value, it will spit a CC message.
+  // AT THAT POINT IT DOES THE SAME AS A EXP. PEDAL 
+  // CC EVENT.
+  byte pre_index;
+  Preset pre;
+  pre_index = button.preset;
+  pre = presets[pre_index];
+
+  
+//          if (isNotEmptyPatch(pat)) {
+//          digitalWrite(PIN_LED_GRN, LOW);
+//          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
+//          MIDI.sendControlChange(pat.controller, 
+//                                 scaled,
+//                                 getPadChannel(button.pad_number));
+//          button.cc_value = scaled;
+//          digitalWrite(PIN_LED_GRN, HIGH);
   
 }
 

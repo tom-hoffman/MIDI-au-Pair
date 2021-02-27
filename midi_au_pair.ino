@@ -19,6 +19,7 @@ const byte TOE_DOWN = 0;
 const byte TOE_UP = 127;
 const float TOETH = 1.0 / TOE_UP;
 const byte OSC_DELAY = 100;
+const float twoPI = 2 * PI;
 const float OSC_INC = 6.283 / OSC_DELAY;
 
 // hardware setup boilerplate
@@ -75,9 +76,10 @@ typedef struct PadButtonState{
   byte pad_number;
   byte preset; 
   byte oscillator;
+  byte cc_value;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
+PadButtonState pad_buttons[2] = {{false, 3, 1, 1, 0}, {false, 6, 2, 1, 0}};
 
 // arduino sketch loops
 
