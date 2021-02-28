@@ -7,20 +7,21 @@
 // by Tom Hoffman
 
 // constants
-const byte MAP_CHANNEL = 15;
-const byte ND_GLOB_CHANNEL = 6;
-const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5};
-const byte PATCH_COUNT = 4;
-const byte PRESS = 0;
-const byte HOLD = 1;
-const byte LEFT = 0;
-const byte RIGHT = 1; 
-const byte TOE_DOWN = 0;
-const byte TOE_UP = 127;
-const float TOETH = 1.0 / TOE_UP;
-const byte OSC_DELAY = 100;
-const float twoPI = 2 * PI;
-const float OSC_INC = 6.283 / OSC_DELAY;
+const byte MAP_CHANNEL = 15;                        // MIDI au Pair's channel
+const byte ND_GLOB_CHANNEL = 6;                     // Nord Drum III's global channel
+const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5}; // Each pad's channel
+const byte PATCH_COUNT = 4;                         // Max. number or patches per preset
+const byte PRESS = 0;                               // MIDI Baby l/r button press is set to value 0
+const byte HOLD = 1;                                // MIDI Baby l/r button hold is set to value 1
+const byte LONG_HOLD = 2;                           // MIDI Baby l/r button long hold is set to value 2
+const byte LEFT = 0;                                // pad_buttons index
+const byte RIGHT = 1;                               // pad_buttons index
+const byte TOE_DOWN = 0;                            // MIDI CC value of toe down position
+const byte TOE_UP = 127;                            // MIDI CC value of toe up position
+const float TOETH = 1.0 / TOE_UP;                   // usually 1/127
+const byte OSC_DELAY = 60;                          // wait between oscillator updates in milliseconds
+const float twoPI = 2 * PI;                         // handy for sine wave calculations
+const float OSC_INC = twoPI / OSC_DELAY;            // how much you increment the osc_counter each time
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -35,7 +36,7 @@ const byte BUTTON_LEDS[2] = {11, 12};
 
 char display_buffer[] = "Helo";
 byte quarter_count = 0;
-byte pulse = 0; // ???
+byte pulse = 0; // what is this again???
 float osc_counter = 0;
 unsigned long last_millis = 0;
 unsigned long new_millis = 0;
@@ -50,7 +51,7 @@ typedef struct Patch{
 } Patch;
 
 typedef struct Preset{
-  char id[3];               // two character string
+  char id;               
   struct Patch patches[PATCH_COUNT]; 
   byte on[2];               // controller/value to fire on start
   byte off[2];              // controller/value to fire on end
@@ -59,17 +60,18 @@ typedef struct Preset{
 // remember to set this to the total number of presets 
 const byte preset_count = 3;
 Preset presets[preset_count] = {
-  {"--",  {}, {0, 0}, {0, 0}},
-  // "Hi" is a natural-ish hi-hat open/close dynamic.
-  {"Hi", {{17, 64, 0}, {30, 0, 127}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
-  // "WA" is a wah-wah effect sweeping the parametric eq.
-  {"WA", {25, 0, 127}, {26, 64}, {26, 0}}, 
+  {'-',  {}, {0, 0}, {0, 0}},
+  // "H" is a natural-ish hi-hat open/close dynamic.
+  {'H', {{17, 64, 0}, {30, 0, 127}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
+  // "W" is a wah-wah effect sweeping the parametric eq.
+  {'W', {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
 
 // oscillator values
 // 0 - no oscillation -- just on and off messages.
 // 1 - expression pedal controlled oscillation
-// 2 - basic sine wave
+// 2 - second sine wave
+byte oscillator_count = 3;
 
 typedef struct PadButtonState{
   bool active;
@@ -89,11 +91,11 @@ void setup()
   writeDisplay();
   initMIDI();
   for (int i = 0; i <= 1; i++) {
-    updatePadButtonPreset(i);
     updatePadButtonActiveLED(i);
   }  
   MsTimer2::set(OSC_DELAY, osc_handler);
   MsTimer2::start();
+  resetDisplay();
 }
 
 void loop()

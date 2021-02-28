@@ -19,6 +19,16 @@ void handleCC(byte channel, byte controller, byte value) {
   digitalWrite(PIN_LED_RED, HIGH);
 }
 
+void fix_preset(byte side) {
+  if (pad_buttons[side].preset == 0) {
+    pad_buttons[side].preset = preset_count - 1;
+  }
+  else { 
+    pad_buttons[side].preset = (pad_buttons[side].preset - 1) % preset_count;
+  }
+  display_buffer[side * 2] = presets[pad_buttons[side].preset].id;
+}
+
 void handlePadPress(byte side, byte value) {
   switch (value) {
     case PRESS:
@@ -27,9 +37,16 @@ void handlePadPress(byte side, byte value) {
       updatePadButtonActiveLED(side);
       break;
     case HOLD:
-      pad_buttons[side].preset = incrementPreset(pad_buttons[side].preset);
-      updatePadButtonPreset(side);
-      alpha4.writeDisplay();
+      pad_buttons[side].preset = (pad_buttons[side].preset + 1) % preset_count;
+      display_buffer[side * 2] = presets[pad_buttons[side].preset].id;
+      writeDisplay();
+      break;
+    case LONG_HOLD:
+      pad_buttons[side].oscillator = (pad_buttons[side].oscillator + 1) % oscillator_count;
+      char a[2];
+      display_buffer[(side * 2) + 1] = itoa(pad_buttons[side].oscillator, a, 10)[0];
+      fix_preset(side);
+      writeDisplay();
       break;
   }
 }
@@ -37,6 +54,7 @@ void handlePadPress(byte side, byte value) {
 void handleClock() {
   if (quarter_count == 23) {
     digitalWrite(PIN_LED_RED, LOW);
+    osc_handler();
     quarter_count = 0;
     digitalWrite(PIN_LED_RED, HIGH);
   }

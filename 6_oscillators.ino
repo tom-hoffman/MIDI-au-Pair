@@ -16,21 +16,18 @@ void second_sine_oscillator(byte b) {
   // CC value, it will spit a CC message.
   // AT THAT POINT IT DOES THE SAME AS A EXP. PEDAL 
   // CC EVENT.
-  byte pre_index;
   Preset pre;
-  pre_index = button.preset;
-  pre = presets[pre_index];
-
-  
-//          if (isNotEmptyPatch(pat)) {
-//          digitalWrite(PIN_LED_GRN, LOW);
-//          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
-//          MIDI.sendControlChange(pat.controller, 
-//                                 scaled,
-//                                 getPadChannel(button.pad_number));
-//          button.cc_value = scaled;
-//          digitalWrite(PIN_LED_GRN, HIGH);
-  
+  Patch pat;
+  int value;
+  pre = presets[button.preset];
+  value = (sin(osc_counter) + 1) * 64;
+  osc_counter = osc_counter + OSC_INC;
+  for (int i = 0; i <= (PATCH_COUNT - 1); i++) {
+    pat = pre.patches[i];
+    if (isNotEmptyPatch(pat)) {
+      sendCC(button, pat, value);
+    }
+  }
 }
 
 void osc_handler() {
@@ -49,25 +46,3 @@ void osc_handler() {
     }
   }
 }
-
-//    && (button.oscillator == 1)) {
-//      // button.preset is a byte.  
-//      pre_index = button.preset;
-//      // get the preset for that index...
-//      pre = presets[pre_index];
-//      // go through the patches for the preset
-//      for (int j = 0; j <= (PATCH_COUNT - 1); j++) {
-//        // check to see if the patch is empty
-//        if ((pat.controller != 0) || (pat.toe_down != 0) || (pat.toe_up != 0)) {
-//          digitalWrite(PIN_LED_GRN, LOW);
-//          pat = pre.patches[j];
-//          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
-//          MIDI.sendControlChange(pat.controller, 
-//                                 scaled,
-//                                 getPadChannel(button.pad_number));
-//          digitalWrite(PIN_LED_GRN, HIGH);
-//        }
-//      }
-//    }
-//  }
-//}}

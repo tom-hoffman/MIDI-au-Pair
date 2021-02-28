@@ -3,6 +3,16 @@
 // MIDI au Pair
 // by Tom Hoffman
 
+void sendCC(PadButtonState b, Patch p, byte value) {
+  digitalWrite(PIN_LED_GRN, LOW);
+  int scaled = scaleCC(value, p.toe_down, p.toe_up);
+  MIDI.sendControlChange(p.controller, 
+                         scaled,
+                         getPadChannel(b.pad_number));
+  b.cc_value = scaled;  // this might not work
+  digitalWrite(PIN_LED_GRN, HIGH); 
+}
+
 void handleExpressionInput(byte value) {
   PadButtonState button;
   Preset pre;
@@ -17,13 +27,7 @@ void handleExpressionInput(byte value) {
       for (int j = 0; j <= (PATCH_COUNT - 1); j++) {
         pat = pre.patches[j];
         if (isNotEmptyPatch(pat)) {
-          digitalWrite(PIN_LED_GRN, LOW);
-          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
-          MIDI.sendControlChange(pat.controller, 
-                                 scaled,
-                                 getPadChannel(button.pad_number));
-          button.cc_value = scaled;
-          digitalWrite(PIN_LED_GRN, HIGH);
+          sendCC(button, pat, value);
         }
       }
     }
