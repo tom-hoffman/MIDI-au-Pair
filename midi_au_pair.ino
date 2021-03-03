@@ -19,9 +19,9 @@ const byte RIGHT = 1;                               // pad_buttons index
 const byte TOE_DOWN = 0;                            // MIDI CC value of toe down position
 const byte TOE_UP = 127;                            // MIDI CC value of toe up position
 const float TOETH = 1.0 / TOE_UP;                   // usually 1/127
-const byte OSC_DELAY = 60;                          // wait between oscillator updates in milliseconds
+const byte OSC_DELAY = 10;                          // wait between oscillator updates in milliseconds
 const float twoPI = 2 * PI;                         // handy for sine wave calculations
-const float OSC_INC = twoPI / OSC_DELAY;            // how much you increment the osc_counter each time
+const float OSC_INC = twoPI / (1000 / OSC_DELAY);   // how much you increment the osc_counter each time
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -59,10 +59,12 @@ typedef struct Preset{
 
 // remember to set this to the total number of presets 
 const byte preset_count = 3;
+// for some reason 0-127 doesn't work but 0-126 or 1-127 are fine.
 Preset presets[preset_count] = {
   {'-',  {}, {0, 0}, {0, 0}},
   // "H" is a natural-ish hi-hat open/close dynamic.
-  {'H', {{17, 64, 0}, {30, 0, 127}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
+  {'H', {{17, 64, 0}, {30, 0, 126}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
+
   // "W" is a wah-wah effect sweeping the parametric eq.
   {'W', {25, 0, 127}, {26, 64}, {26, 0}}, 
 };
@@ -95,6 +97,7 @@ void setup()
   }  
   MsTimer2::set(OSC_DELAY, osc_handler);
   MsTimer2::start();
+  readyDisplay();
   resetDisplay();
 }
 

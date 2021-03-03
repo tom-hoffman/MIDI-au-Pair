@@ -14,8 +14,6 @@ void second_sine_oscillator(byte b) {
   // the sine function and osc_counter, and
   // IF THAT VALUE IS DIFFERENT from the old
   // CC value, it will spit a CC message.
-  // AT THAT POINT IT DOES THE SAME AS A EXP. PEDAL 
-  // CC EVENT.
   Preset pre;
   Patch pat;
   int value;
@@ -26,6 +24,7 @@ void second_sine_oscillator(byte b) {
     pat = pre.patches[i];
     if (isNotEmptyPatch(pat)) {
       sendCC(button, pat, value);
+      analogWrite(PULSE_LED, value);
     }
   }
 }
