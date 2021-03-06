@@ -80,10 +80,10 @@ typedef struct PadButtonState{
   byte pad_number;
   byte preset; 
   byte oscillator;
-  byte cc_value;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 3, 1, 1, 0}, {false, 6, 2, 1, 0}};
+PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
+byte last_cc_values[2][PATCH_COUNT] = {0, 0}; // these need to be per patch???!!!
 
 // arduino sketch loops
 

@@ -12,6 +12,7 @@ bool isNotEmptyPatch(Patch p) {
 }
 
 int scaleCC(byte value, byte toe_down, byte toe_up) {
+  // FIXME -> doesn't work right with reversed range 127 - 0 (only)
   int range = toe_up - toe_down;
   float factor = range * TOETH;
   float scaled ((factor * value) + toe_down);

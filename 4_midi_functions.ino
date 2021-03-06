@@ -3,36 +3,25 @@
 // MIDI au Pair
 // by Tom Hoffman
 
-void sendCC(PadButtonState b, Patch p, byte value) {
-  digitalWrite(PIN_LED_GRN, LOW);
-  int scaled = scaleCC(value, p.toe_down, p.toe_up);
+void sendCC(PadButtonState b, Patch p, byte scaled) {
+  digitalWrite(PIN_LED_GRN, LOW);  
   MIDI.sendControlChange(p.controller, 
                          scaled,
                          getPadChannel(b.pad_number));
-  b.cc_value = scaled;  // this might not work
-  digitalWrite(PIN_LED_GRN, HIGH); 
+  digitalWrite(PIN_LED_GRN, HIGH);  
 }
 
-void handleExpressionInput(byte value) {
-  PadButtonState button;
-  Preset pre;
-  Patch pat;
+void checkCCChange(byte b, Patch pat, byte value) {
   int scaled;
-  // for each button
-  for (int i = 0; i <= 1; i++) {
-    button = pad_buttons[i];
-    if ((button.active) && (button.oscillator == 1)) {
-      pre = presets[button.preset];
-      // go through the patches for the preset
-      for (int j = 0; j <= (PATCH_COUNT - 1); j++) {
-        pat = pre.patches[j];
-        if (isNotEmptyPatch(pat)) {
-          sendCC(button, pat, value);
-        }
-      }
-    }
+  PadButtonState button = pad_buttons[b];
+  scaled = scaleCC(value, pat.toe_down, pat.toe_up);
+  if (scaled != last_cc_values[b]) {
+    sendCC(button, pat, scaled);
+    analogWrite(PULSE_LED, value);
+    last_cc_values[b] = scaled;
   }
 }
+
 
 void firePadButtonState(byte side) {
   PadButtonState button = pad_buttons[side];

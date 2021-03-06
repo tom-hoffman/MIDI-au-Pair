@@ -51,6 +51,27 @@ void handlePadPress(byte side, byte value) {
   }
 }
 
+void handleExpressionInput(byte value) {
+  PadButtonState button;
+  Preset pre;
+  Patch pat;
+  int scaled;
+  // for each button
+  for (int i = 0; i <= 1; i++) {
+    button = pad_buttons[i];
+    if ((button.active) && (button.oscillator == 1)) {
+      pre = presets[button.preset];
+      // go through the patches for the preset
+      for (int j = 0; j <= (PATCH_COUNT - 1); j++) {
+        pat = pre.patches[j];
+        if (isNotEmptyPatch(pat)) {
+          checkCCChange(i, pat, value);
+        }
+      }
+    }
+  }
+}
+
 void handleClock() {
   if (quarter_count == 23) {
     digitalWrite(PIN_LED_RED, LOW);
