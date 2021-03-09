@@ -51,6 +51,9 @@ void handlePadPress(byte side, byte value) {
   }
 }
 
+
+
+
 void handleExpressionInput(byte value) {
   PadButtonState button;
   Preset pre;
@@ -65,7 +68,11 @@ void handleExpressionInput(byte value) {
       for (int j = 0; j <= (PATCH_COUNT - 1); j++) {
         pat = pre.patches[j];
         if (isNotEmptyPatch(pat)) {
-          checkCCChange(i, pat, value);
+          scaled = scaleCC(value, pat.toe_down, pat.toe_up);
+          if (scaled != last_cc_values[i][j]) {
+            sendCC(button, pat, scaled);
+            last_cc_values[i][j] = scaled;
+          }
         }
       }
     }

@@ -83,7 +83,7 @@ typedef struct PadButtonState{
 } PadButtonState;
 
 PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
-byte last_cc_values[2][PATCH_COUNT] = {0, 0}; // these need to be per patch???!!!
+byte last_cc_values[2][PATCH_COUNT]; 
 
 // arduino sketch loops
 

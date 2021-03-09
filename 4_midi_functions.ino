@@ -11,18 +11,6 @@ void sendCC(PadButtonState b, Patch p, byte scaled) {
   digitalWrite(PIN_LED_GRN, HIGH);  
 }
 
-void checkCCChange(byte b, Patch pat, byte value) {
-  int scaled;
-  PadButtonState button = pad_buttons[b];
-  scaled = scaleCC(value, pat.toe_down, pat.toe_up);
-  if (scaled != last_cc_values[b]) {
-    sendCC(button, pat, scaled);
-    analogWrite(PULSE_LED, value);
-    last_cc_values[b] = scaled;
-  }
-}
-
-
 void firePadButtonState(byte side) {
   PadButtonState button = pad_buttons[side];
   Preset preset = presets[button.preset];

@@ -19,7 +19,12 @@ void second_sine_oscillator(byte b) {
   for (int i = 0; i <= (PATCH_COUNT - 1); i++) {
     pat = pre.patches[i];
     if (isNotEmptyPatch(pat)) {
-      checkCCChange(b, pat, value); // need the i too
+      scaled = scaleCC(value, pat.toe_down, pat.toe_up);
+      if (scaled != last_cc_values[b][i]) {
+        sendCC(button, pat, scaled);
+        analogWrite(PULSE_LED, value);
+        last_cc_values[b][i] = scaled;
+      }
     }
   }
 }
