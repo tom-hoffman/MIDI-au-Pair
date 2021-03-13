@@ -1,7 +1,7 @@
 import time
 import mido
 
-# Test suite for 
+# Test suite for MIDI Au Pair.
 
 print("Input ports:")
 print(mido.get_input_names())

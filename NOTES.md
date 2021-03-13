@@ -1,6 +1,11 @@
 MIDI au Pair Notes
 ==================
 
+TODO
+----
+
+* work with midi clock.
+
 Arduino Pin Usage
 -----------------
 
