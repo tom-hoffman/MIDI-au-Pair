@@ -9,7 +9,7 @@ print(mido.get_input_names())
 print("Output ports:")
 print(mido.get_output_names())
 
-TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 28:0'
+TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 20:0'
 MAP_CHANNEL = 14 # seems to be -1?
 LEFT_MAP_PAD = 2
 RIGHT_MAP_PAD = 5
@@ -17,13 +17,15 @@ RIGHT_MAP_PAD = 5
 
 cc = [0, 0]
 
+# test on/off messages
+
 with mido.open_input(TEST_PORT) as port:
-    print("Listening on channels 12 (left) and 13 (right):")
+    print("Listening on channels 3 (left) and 6 (right):")
     for msg in port:
         if (msg.type == 'control_change'):
-            print(msg.channel)
             if (msg.channel == LEFT_MAP_PAD):
                 cc[0] = msg.value
+                print(f"Left: {cc[0]}, Right: {cc[1]}")
             elif (msg.channel == RIGHT_MAP_PAD):
                 cc[1] = msg.value
-            print(f"Left: {cc[0]}, Right: {cc[1]}")
+                print(f"Left: {cc[0]}, Right: {cc[1]}")

@@ -3,7 +3,22 @@
 // MIDI au Pair
 // by Tom Hoffman
 
-
+void osc_handler() {
+  PadButtonState button;
+  // for each button
+  for (int i = 0; i <= 1; i++) {
+    // get the button
+    button = pad_buttons[i];
+    // check to see if it is active
+    if (button.active) {
+      switch (button.oscillator) {
+        case 2:
+          second_sine_oscillator(i);
+          break;
+      }
+    }
+  }
+}
 
 void second_sine_oscillator(byte b) {
   PadButtonState button = pad_buttons[b];
@@ -24,23 +39,6 @@ void second_sine_oscillator(byte b) {
         sendCC(button, pat, scaled);
         analogWrite(PULSE_LED, value);
         last_cc_values[b][i] = scaled;
-      }
-    }
-  }
-}
-
-void osc_handler() {
-  PadButtonState button;
-  // for each button
-  for (int i = 0; i <= 1; i++) {
-    // get the button
-    button = pad_buttons[i];
-    // check to see if it is active
-    if (button.active) {
-      switch (button.oscillator) {
-        case 2:
-          second_sine_oscillator(i);
-          break;
       }
     }
   }

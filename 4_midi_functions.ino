@@ -7,7 +7,7 @@ void sendCC(PadButtonState b, Patch p, byte scaled) {
   digitalWrite(PIN_LED_GRN, LOW);  
   MIDI.sendControlChange(p.controller, 
                          scaled,
-                         getPadChannel(b.pad_number));
+                         b.pad_number);
   digitalWrite(PIN_LED_GRN, HIGH);  
 }
 
@@ -18,14 +18,14 @@ void firePadButtonState(byte side) {
     // array is controller/value
     if ((preset.on[0] != 0) && (preset.on[1] != 0)) {
       digitalWrite(PIN_LED_GRN, LOW);
-      MIDI.sendControlChange(preset.on[0], preset.on[1], getPadChannel(button.pad_number));
+      MIDI.sendControlChange(preset.on[0], preset.on[1], button.pad_number);
       digitalWrite(PIN_LED_GRN, HIGH);
     }
   }
   else {
     if ((preset.off[0] != 0) && (preset.off[1] != 0)) {
       digitalWrite(PIN_LED_GRN, LOW);
-      MIDI.sendControlChange(preset.off[0], preset.off[1], getPadChannel(button.pad_number));  
+      MIDI.sendControlChange(preset.off[0], preset.off[1], button.pad_number);  
       digitalWrite(PIN_LED_GRN, HIGH);
 
     }

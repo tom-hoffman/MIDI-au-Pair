@@ -19,7 +19,7 @@ const byte RIGHT = 1;                               // pad_buttons index
 const byte TOE_DOWN = 0;                            // MIDI CC value of toe down position
 const byte TOE_UP = 127;                            // MIDI CC value of toe up position
 const float TOETH = 1.0 / TOE_UP;                   // usually 1/127
-const byte OSC_DELAY = 10;                          // wait between oscillator updates in milliseconds
+const byte OSC_DELAY = 20;                          // wait between oscillator updates in milliseconds
 const float twoPI = 2 * PI;                         // handy for sine wave calculations
 const float OSC_INC = twoPI / (1000 / OSC_DELAY);   // how much you increment the osc_counter each time
 
@@ -61,16 +61,16 @@ typedef struct Preset{
 const byte preset_count = 5;
 // for some reason 0-127 doesn't work but 0-126 or 1-127 are fine.
 Preset presets[preset_count] = {
-  {'-',  {}, {0, 0}, {0, 0}},
+  {'-',  {{}}, {0, 0}, {0, 0}},
   // "H" is a natural-ish hi-hat open/close dynamic.
   {'H', {{17, 64, 0}, {30, 0, 126}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
 
   // "W" is a wah-wah effect sweeping the parametric eq.
-  {'W', {25, 0, 127}, {26, 64}, {26, 0}},
+  {'W', {{25, 0, 127}}, {26, 64}, {26, 0}},
   // "T" is a test preset just sweeping controller 1 from 0 to 127. 
-  {'T', {1, 0, 127}, {0, 0}, {0, 0}},
+  {'T', {{1, 0, 127}}, {0, 0}, {0, 0}},
   // "t" is a test preset sweeping controller 2 from 126 to 0
-  {'t', {2, 126, 0}, {0, 0}, {0, 0}},
+  {'t', {{2, 126, 0}}, {0, 0}, {0, 0}},
 };
 
 // oscillator values

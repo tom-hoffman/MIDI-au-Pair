@@ -3,10 +3,6 @@
 // MIDI au Pair
 // by Tom Hoffman
 
-byte getPadChannel(byte pad) {
-  return ND_PAD_CHANNELS[pad - 1];
-}
-
 bool isNotEmptyPatch(Patch p) {
   return (p.controller != 0);
 }

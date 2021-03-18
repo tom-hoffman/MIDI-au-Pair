@@ -51,9 +51,6 @@ void handlePadPress(byte side, byte value) {
   }
 }
 
-
-
-
 void handleExpressionInput(byte value) {
   PadButtonState button;
   Preset pre;
