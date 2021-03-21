@@ -1,7 +1,19 @@
 import xml.etree.ElementTree as ET
 import mido
 
+# MIDI au Pair
+# by Tom Hoffman
+
+
+print("Output ports:")
+print(mido.get_output_names())
+
+TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 20:0'
+MAP_CHANNEL = 14 # seems to be -1?
+MANUFACTURER_ID = 58 # Atari!
+
 data = []
+presets = 0
 
 tree = ET.parse("map.xml")
 config = tree.getroot()
@@ -35,10 +47,13 @@ for preset in config:
         data.append(int(off.attrib['value']))
     except:
         data = data + [0, 0]
-        
-    
-                
-                
-    
-
-print(data)
+    presets += 1
+predicted_count = (presets * 5) + (presets * patch_count * 3) + 1
+print(predicted_count, len(data))
+if predicted_count == len(data):
+    msg = mido.Message('sysex', data=data)
+    with mido.open_output(TEST_PORT) as port:
+        port.send(msg)
+        print("Message sent.")
+else:
+    raise Exception("Message length is off.")
