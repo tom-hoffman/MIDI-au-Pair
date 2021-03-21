@@ -9,7 +9,7 @@
 // constants
 const byte MAP_CHANNEL = 15;                        // MIDI au Pair's channel
 const byte ND_GLOB_CHANNEL = 6;                     // Nord Drum III's global channel
-const byte ND_PAD_CHANNELS[6] = {0, 1, 2, 3, 4, 5}; // Each pad's channel
+// For now we're going to require the pad channels to be 0-5.
 const byte PATCH_COUNT = 4;                         // Max. number or patches per preset
 const byte PRESS = 0;                               // MIDI Baby l/r button press is set to value 0
 const byte HOLD = 1;                                // MIDI Baby l/r button hold is set to value 1
@@ -21,7 +21,6 @@ const byte TOE_UP = 127;                            // MIDI CC value of toe up p
 const float TOETH = 1.0 / TOE_UP;                   // usually 1/127
 const byte OSC_DELAY = 20;                          // wait between oscillator updates in milliseconds
 const float twoPI = 2 * PI;                         // handy for sine wave calculations
-const float OSC_INC = twoPI / (1000 / OSC_DELAY);   // how much you increment the osc_counter each time
 
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -35,12 +34,14 @@ const byte BUTTON_LEDS[2] = {11, 12};
 // global variables & buffer
 
 char display_buffer[] = "Helo";
+byte last_pedal_pos = 0;
 byte quarter_count = 0;
-byte pulse = 0; // what is this again???
 float osc_counter = 0;
 unsigned long last_millis = 0;
 unsigned long new_millis = 0;
 unsigned int clock_millis = 0;
+float OSC_INC = 0.001;    // calculate when clock changes
+
 
 // presets & patches
 // A Preset is an array of up to PATCH_COUNT patches.
@@ -61,7 +62,7 @@ typedef struct Preset{
 const byte preset_count = 5;
 // for some reason 0-127 doesn't work but 0-126 or 1-127 are fine.
 Preset presets[preset_count] = {
-  {'-',  {{}}, {0, 0}, {0, 0}},
+  {'-',  {{}}, {1, 64}, {1, 1}},
   // "H" is a natural-ish hi-hat open/close dynamic.
   {'H', {{17, 64, 0}, {30, 0, 126}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
 
@@ -78,6 +79,7 @@ Preset presets[preset_count] = {
 // 1 - expression pedal controlled oscillation
 // 2 - second sine wave
 byte oscillator_count = 3;
+
 
 typedef struct PadButtonState{
   bool active;

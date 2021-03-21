@@ -87,6 +87,7 @@ void handleClock() {
   last_millis = new_millis;
   new_millis = millis();
   clock_millis = new_millis - last_millis;
+  OSC_INC = twoPI / ((clock_millis * 80) / OSC_DELAY);        
 }
 
  

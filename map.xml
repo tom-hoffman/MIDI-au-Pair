@@ -1,0 +1,27 @@
+<config patch_count="4">
+  <preset id="H">
+    <patches>
+      <patch controller="17" toe_up="64" toe_down="0">
+        noise filter resonance
+      </patch>
+      <patch controller="30" toe_up="0" toe_down="126">
+        tone spectra
+      </patch>
+      <patch controller="21" toe_up="70" toe_down="16">
+        noise decay  
+      </patch>
+      <patch controller="50" toe_up="70" toe_down="16">
+        tone decay
+      </patch>
+    </patches>
+    <on />
+    <off />
+  </preset>
+  <preset id="v">
+    <patches />
+    <on controller="48" value="127">
+      reverb amount
+    </on>
+    <off controller="48" value="0" />
+  </preset>
+</config>
