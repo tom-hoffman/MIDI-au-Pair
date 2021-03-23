@@ -9,6 +9,18 @@ TODO
 * square oscillator
 * sysex format
 
+Size of Things
+--------------
+
+Currently set to:
+
+* 16 presets
+* 4 patches per preset
+* each patch controls one CC value
+
+Probably this can be expanded within the constraints of the 
+Arduino UNO with no extreme measures, but we'll see.
+
 Arduino Pin Usage
 -----------------
 

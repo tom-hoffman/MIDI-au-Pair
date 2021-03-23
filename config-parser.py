@@ -18,7 +18,6 @@ presets = 0
 tree = ET.parse("map.xml")
 config = tree.getroot()
 patch_count = int(config.attrib['patch_count'])
-data.append(patch_count)
 for preset in config:
     data.append(ord(preset.attrib['id']))
     # order has to be patches, on, off
@@ -48,12 +47,13 @@ for preset in config:
     except:
         data = data + [0, 0]
     presets += 1
-predicted_count = (presets * 5) + (presets * patch_count * 3) + 1
-print(predicted_count, len(data))
+predicted_count = (presets * 5) + (presets * patch_count * 3) + 2
+data = [58, predicted_count] + data
 if predicted_count == len(data):
     msg = mido.Message('sysex', data=data)
     with mido.open_output(TEST_PORT) as port:
         port.send(msg)
+        print(msg)
         print("Message sent.")
 else:
     raise Exception("Message length is off.")

@@ -90,4 +90,13 @@ void handleClock() {
   OSC_INC = twoPI / ((clock_millis * 80) / OSC_DELAY);        
 }
 
- 
+void handleSysex(byte *a, unsigned int len) {
+  if (*(a + 1) == 58) {
+    int count = *(a + 2);
+    for (int i = 3; (i <= (count)); i++) {
+      displayByte(*(a + i));
+      delay(200);
+    }
+  readyDisplay();
+  }
+}

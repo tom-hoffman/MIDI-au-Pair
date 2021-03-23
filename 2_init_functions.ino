@@ -21,6 +21,7 @@ void initHardware() {
 void initMIDI() {
   MIDI.setHandleControlChange(handleCC);
   MIDI.setHandleClock(handleClock);
+  MIDI.setHandleSystemExclusive(handleSysex);
   MIDI.begin(MAP_CHANNEL);
   MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
 }
