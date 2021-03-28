@@ -29,7 +29,7 @@ Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
 const byte PIN_LED_GRN = 6;
 const byte PIN_LED_RED = 7;
 const byte PULSE_LED = 5;
-const byte BUTTON_LEDS[2] = {11, 12};
+const byte BUTTON_LEDS[2] = {8, 9};
 
 // global variables & buffer
 
@@ -59,19 +59,6 @@ typedef struct Preset{
 
 // remember to set this to the total number of presets 
 const byte preset_count = 5;
-// for some reason 0-127 doesn't work but 0-126 or 1-127 are fine.
-//Preset presets[preset_count] = {
-//  {'-',  {{}}, {1, 64}, {1, 1}},
-//  // "H" is a natural-ish hi-hat open/close dynamic.
-//  {'H', {{17, 64, 0}, {30, 0, 126}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
-//
-//  // "W" is a wah-wah effect sweeping the parametric eq.
-//  {'W', {{25, 0, 127}}, {26, 64}, {26, 0}},
-//  // "T" is a test preset just sweeping controller 1 from 0 to 127. 
-//  {'T', {{1, 0, 127}}, {0, 0}, {0, 0}},
-//  // "t" is a test preset sweeping controller 2 from 126 to 0
-//  {'t', {{2, 126, 0}}, {0, 0}, {0, 0}},
-//};
 
 Preset presets[16];
 
@@ -81,7 +68,6 @@ Preset presets[16];
 // 2 - second sine wave
 byte oscillator_count = 3;
 
-
 typedef struct PadButtonState{
   bool active;
   byte pad_number;
@@ -89,7 +75,7 @@ typedef struct PadButtonState{
   byte oscillator;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 3, 0, 1}, {false, 6, 1, 1}};
+PadButtonState pad_buttons[2] = {{false, 3, 0, 1}, {false, 6, 0, 1}};
 byte last_cc_values[2][PATCH_COUNT]; 
 
 // arduino sketch loops

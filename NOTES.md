@@ -39,8 +39,8 @@ Hardware Serial -> MIDI IN/OUT
 
 ### Indicator LED's
 
-* Left -> D11 (need to move for FRAM) 
-* Right -> D12 (need to move for FRAM)
+* Left -> D11 (need to move for FRAM) to D8
+* Right -> D12 (need to move for FRAM) to D9
 * Pulse -> D5
 
 ### Adafruit SPI FRAM
@@ -78,3 +78,16 @@ FRAM Documentation
 
 https://learn.adafruit.com/adafruit-spi-fram-breakout
 
+
+//Preset presets[preset_count] = {
+//  {'-',  {{}}, {1, 64}, {1, 1}},
+//  // "H" is a natural-ish hi-hat open/close dynamic.
+//  {'H', {{17, 64, 0}, {30, 0, 126}, {21, 70, 16}, {50, 70, 16}}, {0, 0}, {0, 0}},
+//
+//  // "W" is a wah-wah effect sweeping the parametric eq.
+//  {'W', {{25, 0, 127}}, {26, 64}, {26, 0}},
+//  // "T" is a test preset just sweeping controller 1 from 0 to 127. 
+//  {'T', {{1, 0, 127}}, {0, 0}, {0, 0}},
+//  // "t" is a test preset sweeping controller 2 from 126 to 0
+//  {'t', {{2, 126, 0}}, {0, 0}, {0, 0}},
+//};
