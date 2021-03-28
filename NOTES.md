@@ -51,6 +51,7 @@ Hardware Serial -> MIDI IN/OUT
 * CS -> D10
 
 ### Adafruit Rotary Encoder
+
 * 3 digital pins each.
 
 MIDI Counting Notes:
@@ -64,6 +65,13 @@ Code Organization
 -----------------
 
 I'm a C++ novice, so I'm just using the Arduino IDE tab system to divide up the code. I'm using numbers in the filename to control the loading order, although I don't know if that really matters in this case.
+
+SysEx Format
+------------
+
+byte 1 -> 58 (Manufacturer ID for Atari)
+byte 2 -> length of body of message
+byte 3... stream of presets.
 
 FRAM Documentation
 ------------------

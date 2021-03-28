@@ -91,12 +91,10 @@ void handleClock() {
 }
 
 void handleSysex(byte *a, unsigned int len) {
+  // this should write to FRAM and 
+  // then rebuild the presets.
   if (*(a + 1) == 58) {
-    int count = *(a + 2);
-    for (int i = 3; (i <= (count)); i++) {
-      displayByte(*(a + i));
-      delay(200);
-    }
-  readyDisplay();
+    buildPresets((a), len);
+    resetDisplay();
   }
 }

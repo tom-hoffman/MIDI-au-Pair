@@ -1,4 +1,4 @@
-<config patch_count="4">
+<config>
   <preset id="H">
     <patches>
       <patch controller="17" toe_up="64" toe_down="0">
@@ -17,7 +17,7 @@
     <on />
     <off />
   </preset>
-  <preset id="v">
+  <preset id="V">
     <patches />
     <on controller="48" value="127">
       reverb amount

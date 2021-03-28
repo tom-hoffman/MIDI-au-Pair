@@ -89,7 +89,7 @@ typedef struct PadButtonState{
   byte oscillator;
 } PadButtonState;
 
-PadButtonState pad_buttons[2] = {{false, 3, 1, 1}, {false, 6, 2, 1}};
+PadButtonState pad_buttons[2] = {{false, 3, 0, 1}, {false, 6, 1, 1}};
 byte last_cc_values[2][PATCH_COUNT]; 
 
 // arduino sketch loops
