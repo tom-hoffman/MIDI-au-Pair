@@ -24,4 +24,15 @@
     </on>
     <off controller="48" value="0" />
   </preset>
+  //  // "T" is a test preset just sweeping controller 1 from 0 to 127. 
+//  {'T', {{1, 0, 127}}, {0, 0}, {0, 0}},
+  <preset id = "t">
+    <patches>
+      <patch controller="1" toe_up="126" toe_down="0">
+        test sweeper
+      </patch>
+    </patches>
+    <on />
+    <off />
+  </preset>
 </config>

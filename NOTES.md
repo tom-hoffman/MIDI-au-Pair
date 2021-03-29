@@ -4,9 +4,8 @@ MIDI au Pair Notes
 TODO
 ----
 
+* rotary switches
 * hi-hat close
-* char labels for oscillators
-* square oscillator
 
 Size of Things
 --------------
@@ -64,6 +63,11 @@ Code Organization
 -----------------
 
 I'm a C++ novice, so I'm just using the Arduino IDE tab system to divide up the code. I'm using numbers in the filename to control the loading order, although I don't know if that really matters in this case.
+
+Calculating Waves on the Fly
+----------------------------
+
+If it is possible from a performance perspective to use trig to calculate waveforms on the fly, I will, because I'm a high school computer science teacher.
 
 SysEx Format
 ------------

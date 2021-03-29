@@ -7,7 +7,7 @@ void resetDisplay() {
   for (int i = 0; i < 2; i++) {
     display_buffer[i * 2] = presets[pad_buttons[i].preset].id;
     char a[2];
-    display_buffer[(i * 2) + 1] = itoa(pad_buttons[i].oscillator, a, 10)[0];
+    display_buffer[(i * 2) + 1] = oscillators[pad_buttons[i].oscillator];
     writeDisplay();
   }
 }

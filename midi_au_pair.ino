@@ -75,10 +75,11 @@ typedef struct Preset{
 Preset presets[16];
 
 // oscillator values
-// 0 - no oscillation -- just on and off messages.
-// 1 - expression pedal controlled oscillation
-// 2 - second sine wave
-byte oscillator_count = 3;
+// 0 - '/' - no oscillation -- just on and off messages.
+// 1 - 'X' - expression pedal controlled oscillation
+// 2 - '1' - 1x sine wave
+byte const oscillator_count = 3;
+byte oscillators[oscillator_count] = {'-', 'X', '1'};
 
 typedef struct PadButtonState{
   bool active;

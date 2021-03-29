@@ -44,7 +44,7 @@ void handlePadPress(byte side, byte value) {
     case LONG_HOLD:
       pad_buttons[side].oscillator = (pad_buttons[side].oscillator + 1) % oscillator_count;
       char a[2];
-      display_buffer[(side * 2) + 1] = itoa(pad_buttons[side].oscillator, a, 10)[0];
+      display_buffer[(side * 2) + 1] = oscillators[pad_buttons[side].oscillator];
       fix_preset(side);
       writeDisplay();
       break;

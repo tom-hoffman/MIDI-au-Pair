@@ -29,7 +29,10 @@ void second_sine_oscillator(byte b) {
   int value;
   int scaled;
   pre = presets[button.preset];
-  value = (sin(osc_counter) + 1) * 64;
+  // value = (sin(osc_counter) + 1) * 64;
+  value = (sin(osc_counter) + 
+            ((sin(3 * osc_counter) * 0.33333)) +
+            ((sin(5 * osc_counter) * 0.2)) + 1) * 64;
   osc_counter = osc_counter + OSC_INC;
   for (int i = 0; i <= (PATCH_COUNT - 1); i++) {
     pat = pre.patches[i];
