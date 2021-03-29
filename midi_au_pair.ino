@@ -1,6 +1,8 @@
+#include <SPI.h>
 #include <MsTimer2.h>
 #include <MIDI.h>
 #include <Adafruit_GFX.h>
+#include "Adafruit_FRAM_SPI.h"
 #include "Adafruit_LEDBackpack.h"
 
 // MIDI au Pair
@@ -21,10 +23,20 @@ const byte TOE_UP = 127;                            // MIDI CC value of toe up p
 const float TOETH = 1.0 / TOE_UP;                   // usually 1/127
 const byte OSC_DELAY = 20;                          // wait between oscillator updates in milliseconds
 const float twoPI = 2 * PI;                         // handy for sine wave calculations
-
+                        
 // hardware setup boilerplate
 MIDI_CREATE_DEFAULT_INSTANCE();
+
 Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
+
+// FRAM setup
+const byte FRAM_CS = 10;
+Adafruit_FRAM_SPI fram = Adafruit_FRAM_SPI(FRAM_CS);  // use hardware SPI
+const byte FRAM_SCK = 13;
+const byte FRAM_MISO = 12;
+const byte FRAM_MOSI = 11;
+const byte addrSizeInByte = 2; 
+uint32_t memSize;
 
 const byte PIN_LED_GRN = 6;
 const byte PIN_LED_RED = 7;
@@ -33,6 +45,7 @@ const byte BUTTON_LEDS[2] = {8, 9};
 
 // global variables & buffer
 
+byte preset_count = 0;
 char display_buffer[] = "Helo";
 byte last_pedal_pos = 0;
 byte quarter_count = 0;
@@ -57,8 +70,7 @@ typedef struct Preset{
   byte off[2];              // controller/value to fire on end
 } Preset;
 
-// remember to set this to the total number of presets 
-const byte preset_count = 5;
+
 
 Preset presets[16];
 

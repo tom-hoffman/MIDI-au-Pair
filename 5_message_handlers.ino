@@ -94,7 +94,8 @@ void handleSysex(byte *a, unsigned int len) {
   // this should write to FRAM and 
   // then rebuild the presets.
   if (*(a + 1) == 58) {
-    buildPresets((a), len);
+    buildPresets(a);
+    writePresetstoFRAM(a, len);
     resetDisplay();
   }
 }

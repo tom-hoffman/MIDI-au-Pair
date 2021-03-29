@@ -16,6 +16,8 @@ void initHardware() {
   pinMode(BUTTON_LEDS[RIGHT], OUTPUT);
   digitalWrite(BUTTON_LEDS[RIGHT], LOW);
   pinMode(PULSE_LED, OUTPUT);
+  fram.begin();
+  readPresetsfromFRAM();
 }
 
 void initMIDI() {
@@ -24,4 +26,13 @@ void initMIDI() {
   MIDI.setHandleSystemExclusive(handleSysex);
   MIDI.begin(MAP_CHANNEL);
   MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
+}
+
+void readPresetsfromFRAM() {
+  byte len = fram.read8(2);
+  byte a[len];
+  for (int i; i < len; i++) {
+    a[i] = fram.read8(i);
+  }
+  buildPresets(a);
 }

@@ -1,12 +1,14 @@
-// oscillators
+// presets
 
 // MIDI au Pair
 // by Tom Hoffman
 
-void buildPresets(byte *a, unsigned int len) {
+void buildPresets(byte *a) {
+  // note that this expects the complete sysex data stream.
   byte counter = 3;
-  byte number_of_presets = len / 17; // this could be calculated using patch_count?
-  for (int i = 0; i < number_of_presets; i++) {
+  byte len = *(a + 2);
+  preset_count = (len - 4) / 17;
+  for (int i = 0; i < preset_count; i++) {
     digitalWrite(PIN_LED_RED, LOW);
     presets[i].id = *(a + counter);
     counter++;
@@ -28,4 +30,16 @@ void buildPresets(byte *a, unsigned int len) {
     counter++;
     digitalWrite(PIN_LED_RED, HIGH);
   }
+}
+
+void writePresetstoFRAM(byte *a, unsigned int len) {
+  // note that this writes the whole sysex data stream.
+  // for now go with 17 bytes for a patch
+  digitalWrite(PIN_LED_GRN, LOW);
+  for (uint8_t i = 0; i < len; i++) {
+    fram.writeEnable(true);
+    fram.write8(i, *(a + i));
+    fram.writeEnable(false);
+  }
+  digitalWrite(PIN_LED_GRN, HIGH);
 }

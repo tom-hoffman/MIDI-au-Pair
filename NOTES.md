@@ -7,7 +7,6 @@ TODO
 * hi-hat close
 * char labels for oscillators
 * square oscillator
-* sysex format
 
 Size of Things
 --------------
@@ -39,8 +38,8 @@ Hardware Serial -> MIDI IN/OUT
 
 ### Indicator LED's
 
-* Left -> D11 (need to move for FRAM) to D8
-* Right -> D12 (need to move for FRAM) to D9
+* Left -> D8
+* Right -> D9
 * Pulse -> D5
 
 ### Adafruit SPI FRAM

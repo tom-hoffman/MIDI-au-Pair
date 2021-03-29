@@ -50,10 +50,11 @@ for preset in config:
 predicted_count = (presets * 5) + (presets * patch_count * 3) + 2
 data = [58, predicted_count] + data
 if predicted_count == len(data):
+    data[1] = data[1] + 2  # adjust for start and end bytes.
     msg = mido.Message('sysex', data=data)
     with mido.open_output(TEST_PORT) as port:
         port.send(msg)
-        print(msg.bytes())
+        print(len(msg.bytes()))
         print("Message sent.")
 else:
     raise Exception("Message length is off.")
