@@ -78,8 +78,9 @@ Preset presets[16];
 // 0 - '/' - no oscillation -- just on and off messages.
 // 1 - 'X' - expression pedal controlled oscillation
 // 2 - '1' - 1x sine wave
-byte const oscillator_count = 3;
-byte oscillators[oscillator_count] = {'-', 'X', '1'};
+// 3 - 'U' - squarish fourier transform
+byte const oscillator_count = 4;
+byte oscillators[oscillator_count] = {'-', 'X', '1', 'U'};
 
 typedef struct PadButtonState{
   bool active;

@@ -3,6 +3,8 @@
 // MIDI au Pair
 // by Tom Hoffman
 
+// These are hard-wired here.
+
 void osc_handler() {
   PadButtonState button;
   // for each button
@@ -13,26 +15,35 @@ void osc_handler() {
     if (button.active) {
       switch (button.oscillator) {
         case 2:
-          second_sine_oscillator(i);
+          updateOscillator(i, calculateSineWave());
+          break;
+        case 3:
+          updateOscillator(i, calculate3rdFourier());
           break;
       }
     }
   }
 }
 
-void second_sine_oscillator(byte b) {
+int calculateSineWave() {
+  return (sin(osc_counter) + 1) * 64;
+}
+
+int calculate3rdFourier() {
+  // this is a square-ish wave
+  return (sin(osc_counter) + 
+            ((sin(3 * osc_counter) * 0.33333)) +
+            ((sin(5 * osc_counter) * 0.2)) + 1) * 64; 
+}
+
+void updateOscillator(byte b, int value) {
   PadButtonState button = pad_buttons[b];
   // Generates one full cycle per second.
   // Will be called every OSC_DELAY,
   Preset pre;
   Patch pat;
-  int value;
   int scaled;
   pre = presets[button.preset];
-  // value = (sin(osc_counter) + 1) * 64;
-  value = (sin(osc_counter) + 
-            ((sin(3 * osc_counter) * 0.33333)) +
-            ((sin(5 * osc_counter) * 0.2)) + 1) * 64;
   osc_counter = osc_counter + OSC_INC;
   for (int i = 0; i <= (PATCH_COUNT - 1); i++) {
     pat = pre.patches[i];

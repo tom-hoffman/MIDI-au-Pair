@@ -87,7 +87,8 @@ void handleClock() {
   last_millis = new_millis;
   new_millis = millis();
   clock_millis = new_millis - last_millis;
-  OSC_INC = twoPI / ((clock_millis * 80) / OSC_DELAY);        
+  // This multiplier is a wild guess.  Needs adjustment.
+  OSC_INC = twoPI / ((clock_millis * 60) / OSC_DELAY);        
 }
 
 void handleSysex(byte *a, unsigned int len) {
