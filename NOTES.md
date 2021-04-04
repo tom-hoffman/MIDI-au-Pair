@@ -4,7 +4,9 @@ MIDI au Pair Notes
 TODO
 ----
 
-* rotary switches
+* test encoder press
+* fix memory
+* sync clock for real
 * hi-hat close
 
 Size of Things
@@ -50,7 +52,11 @@ Hardware Serial -> MIDI IN/OUT
 
 ### Adafruit Rotary Encoder
 
-* 3 digital pins each.
+
+* A -> D2
+* B -> D3
+* Switch -> D4
+
 
 MIDI Counting Notes:
 --------------------

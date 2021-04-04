@@ -3,6 +3,14 @@
 // MIDI au Pair
 // by Tom Hoffman
 
+void initMIDI() {
+  MIDI.setHandleControlChange(handleCC);
+  MIDI.setHandleClock(handleClock);
+  MIDI.setHandleSystemExclusive(handleSysex);
+  MIDI.begin(MAP_CHANNEL);
+  MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
+}
+
 void initHardware() {
   pinMode(LED_BUILTIN, OUTPUT);
   alpha4.begin(0x70); 
@@ -16,16 +24,14 @@ void initHardware() {
   pinMode(BUTTON_LEDS[RIGHT], OUTPUT);
   digitalWrite(BUTTON_LEDS[RIGHT], LOW);
   pinMode(PULSE_LED, OUTPUT);
-  fram.begin();
+  pinMode(rotary_pin_1, INPUT);
+  pinMode(rotary_pin_2, INPUT);
+  pinMode(rotary_press, INPUT_PULLUP);
+  digitalWrite(rotary_pin_1, HIGH);
+  
+  bouncer.attach(rotary_pin_1);
+  bouncer.interval(5); 
   readPresetsfromFRAM();
-}
-
-void initMIDI() {
-  MIDI.setHandleControlChange(handleCC);
-  MIDI.setHandleClock(handleClock);
-  MIDI.setHandleSystemExclusive(handleSysex);
-  MIDI.begin(MAP_CHANNEL);
-  MIDI.sendProgramChange(0, ND_GLOB_CHANNEL);
 }
 
 void readPresetsfromFRAM() {
@@ -36,3 +42,8 @@ void readPresetsfromFRAM() {
   }
   buildPresets(a);
 }
+
+
+
+
+  

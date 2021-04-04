@@ -8,7 +8,7 @@ import mido
 print("Output ports:")
 print(mido.get_output_names())
 
-TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 20:0'
+TEST_PORT = 'UM-ONE:UM-ONE MIDI 1 28:0'
 MAP_CHANNEL = 14 # seems to be -1?
 MANUFACTURER_ID = 58 # Atari!
 

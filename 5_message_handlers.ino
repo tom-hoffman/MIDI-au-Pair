@@ -4,7 +4,9 @@
 // by Tom Hoffman
 
 void handleCC(byte channel, byte controller, byte value) {
-  digitalWrite(PIN_LED_RED, LOW);
+  #ifdef DEBUG
+    digitalWrite(PIN_LED_RED, LOW);
+  #endif
   switch (controller) {
     case 11: // expression pedal
       handleExpressionInput(value);
@@ -16,7 +18,9 @@ void handleCC(byte channel, byte controller, byte value) {
       handlePadPress(RIGHT, value);
       break;
   }
-  digitalWrite(PIN_LED_RED, HIGH);
+  #ifdef DEBUG
+    digitalWrite(PIN_LED_RED, HIGH);
+  #endif
 }
 
 void fix_preset(byte side) {
@@ -34,12 +38,9 @@ void handlePadPress(byte side, byte value) {
     case PRESS:
       pad_buttons[side].active = !pad_buttons[side].active;
       firePadButtonState(side);
-      updatePadButtonActiveLED(side);
-      break;
+      updatePadButtonActiveLED(side);      break;
     case HOLD:
-      pad_buttons[side].preset = (pad_buttons[side].preset + 1) % preset_count;
-      display_buffer[side * 2] = presets[pad_buttons[side].preset].id;
-      writeDisplay();
+      updatePreset(side, 1);
       break;
     case LONG_HOLD:
       pad_buttons[side].oscillator = (pad_buttons[side].oscillator + 1) % oscillator_count;
@@ -78,10 +79,14 @@ void handleExpressionInput(byte value) {
 
 void handleClock() {
   if (quarter_count == 23) {
-    digitalWrite(PIN_LED_RED, LOW);
+    #ifdef DEBUG
+      digitalWrite(PIN_LED_RED, LOW);
+    #endif
     osc_handler();
     quarter_count = 0;
-    digitalWrite(PIN_LED_RED, HIGH);
+    #ifdef DEBUG
+      digitalWrite(PIN_LED_RED, HIGH);
+    #endif
   }
   quarter_count++;
   last_millis = new_millis;

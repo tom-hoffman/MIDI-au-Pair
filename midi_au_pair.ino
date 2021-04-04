@@ -1,9 +1,12 @@
 #include <SPI.h>
 #include <MsTimer2.h>
 #include <MIDI.h>
+#include <Bounce2.h>
 #include <Adafruit_GFX.h>
 #include "Adafruit_FRAM_SPI.h"
 #include "Adafruit_LEDBackpack.h"
+
+#define DEBUG
 
 // MIDI au Pair
 // by Tom Hoffman
@@ -43,6 +46,12 @@ const byte PIN_LED_RED = 7;
 const byte PULSE_LED = 5;
 const byte BUTTON_LEDS[2] = {8, 9};
 
+// rotary encoder
+int rotary_pin_1 = 2;
+int rotary_pin_2 = 3;
+int rotary_press = 4;
+Bounce bouncer = Bounce();
+
 // global variables & buffer
 
 byte preset_count = 0;
@@ -69,8 +78,6 @@ typedef struct Preset{
   byte on[2];               // controller/value to fire on start
   byte off[2];              // controller/value to fire on end
 } Preset;
-
-
 
 Preset presets[16];
 
@@ -111,4 +118,5 @@ void setup()
 void loop()
 {
   MIDI.read();
+  checkRotary();
 }
