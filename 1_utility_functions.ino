@@ -21,9 +21,7 @@ void changeOscillator(byte side, int value) {
   else {
     pad_buttons[side].oscillator = (pad_buttons[side].oscillator + value) % oscillator_count;
   }
-  char a[2];
   display_buffer[(side * 2) + 1] = oscillators[pad_buttons[side].oscillator];
-  changePreset(side, -1);
   writeDisplay();
 }
 

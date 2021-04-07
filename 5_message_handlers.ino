@@ -35,6 +35,7 @@ void handlePadPress(byte side, byte value) {
       break;
     case LONG_HOLD:
       changeOscillator(side, 1);
+      changePreset(side, -1);
       break;
   }
 }
@@ -79,8 +80,8 @@ void handleClock() {
   last_millis = new_millis;
   new_millis = millis();
   clock_millis = new_millis - last_millis;
-  // This multiplier is a wild guess.  Needs adjustment.
-  OSC_INC = twoPI / ((clock_millis * 60) / OSC_DELAY);        
+  // The multiplier is based on eyeball testing.
+  OSC_INC = twoPI / ((clock_millis * 26) / OSC_DELAY);        
 }
 
 void handleSysex(byte *a, unsigned int len) {

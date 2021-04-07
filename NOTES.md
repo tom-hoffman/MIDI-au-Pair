@@ -4,11 +4,6 @@ MIDI au Pair Notes
 TODO
 ----
 
-* use fix_preset with updatePreset 
-* split out updateOscillator
-* test encoder press DUH! wire it up!
-
-* sync clock for real
 * hi-hat close
 
 Size of Things
