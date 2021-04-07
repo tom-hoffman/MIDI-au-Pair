@@ -7,17 +7,13 @@
 
 void checkRotary() {
   bouncer.update();
-  if ( bouncer.risingEdge()) {
-    if (digitalRead(rotary_pin_2)) {
-      if (digitalRead(rotary_press) == LOW) {
-        updatePreset(1, 1);
-      }
-      else {
-        updatePreset(1, 0); 
-      }
+  if (bouncer.risingEdge()) {
+    byte side = digitalRead(SIDE_SWITCH);
+    if (digitalRead(ROTARY_PIN_2) == HIGH) {
+        changePreset(1, 1);
     }
     else {
-      updatePreset(0, 0);
+      changePreset(1, -1);
     }
   } 
 }

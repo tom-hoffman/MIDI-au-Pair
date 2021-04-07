@@ -4,8 +4,10 @@ MIDI au Pair Notes
 TODO
 ----
 
-* test encoder press
-* fix memory
+* use fix_preset with updatePreset 
+* split out updateOscillator
+* test encoder press DUH! wire it up!
+
 * sync clock for real
 * hi-hat close
 
@@ -56,6 +58,10 @@ Hardware Serial -> MIDI IN/OUT
 * A -> D2
 * B -> D3
 * Switch -> D4
+
+### Side Selector Switch
+
+* Positive -> A2
 
 
 MIDI Counting Notes:

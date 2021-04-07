@@ -47,10 +47,13 @@ const byte PULSE_LED = 5;
 const byte BUTTON_LEDS[2] = {8, 9};
 
 // rotary encoder
-int rotary_pin_1 = 2;
-int rotary_pin_2 = 3;
-int rotary_press = 4;
+const byte ROTARY_PIN_1 = 2;
+const byte ROTARY_PIN_2 = 3;
+const byte ROTARY_PRESS = 4;
 Bounce bouncer = Bounce();
+
+// switch to choose side for encoder 
+const byte SIDE_SWITCH = A2;
 
 // global variables & buffer
 

@@ -24,13 +24,15 @@ void initHardware() {
   pinMode(BUTTON_LEDS[RIGHT], OUTPUT);
   digitalWrite(BUTTON_LEDS[RIGHT], LOW);
   pinMode(PULSE_LED, OUTPUT);
-  pinMode(rotary_pin_1, INPUT);
-  pinMode(rotary_pin_2, INPUT);
-  pinMode(rotary_press, INPUT_PULLUP);
-  digitalWrite(rotary_pin_1, HIGH);
-  
-  bouncer.attach(rotary_pin_1);
+  pinMode(ROTARY_PIN_1, INPUT_PULLUP);
+  pinMode(ROTARY_PIN_2, INPUT_PULLUP);
+  pinMode(ROTARY_PRESS, INPUT_PULLUP);
+  digitalWrite(ROTARY_PIN_1, HIGH);
+  pinMode(SIDE_SWITCH, INPUT_PULLUP);
+ 
+  bouncer.attach(ROTARY_PIN_1);
   bouncer.interval(5); 
+  fram.begin();
   readPresetsfromFRAM();
 }
 

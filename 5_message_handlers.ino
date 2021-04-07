@@ -23,31 +23,18 @@ void handleCC(byte channel, byte controller, byte value) {
   #endif
 }
 
-void fix_preset(byte side) {
-  if (pad_buttons[side].preset == 0) {
-    pad_buttons[side].preset = preset_count - 1;
-  }
-  else { 
-    pad_buttons[side].preset = (pad_buttons[side].preset - 1) % preset_count;
-  }
-  display_buffer[side * 2] = presets[pad_buttons[side].preset].id;
-}
-
 void handlePadPress(byte side, byte value) {
   switch (value) {
     case PRESS:
       pad_buttons[side].active = !pad_buttons[side].active;
       firePadButtonState(side);
-      updatePadButtonActiveLED(side);      break;
+      updatePadButtonActiveLED(side);      
+      break;
     case HOLD:
-      updatePreset(side, 1);
+      changePreset(side, 1);
       break;
     case LONG_HOLD:
-      pad_buttons[side].oscillator = (pad_buttons[side].oscillator + 1) % oscillator_count;
-      char a[2];
-      display_buffer[(side * 2) + 1] = oscillators[pad_buttons[side].oscillator];
-      fix_preset(side);
-      writeDisplay();
+      changeOscillator(side, 1);
       break;
   }
 }
